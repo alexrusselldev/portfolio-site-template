@@ -1,4 +1,5 @@
 const fs = require('fs');
+const promptSync = require('prompt-sync')();
 
 function loadTemplate(path: string) {
   let template;
@@ -41,6 +42,31 @@ function getExistingSlugs(path: string): string[] {
     });
 
   return returnValue;
+}
+
+function populateFrontmatter() {
+  const frontMatter: Record<string, any> = {
+    slug: 'Enter a slug for this page',
+    title: 'Enter a title for this page',
+    description: 'Enter a description for this page.',
+    showInNav: 'Would you like this page to be shown in the navbar?',
+    navLabel: 'Enter a label to be shown on the navbar.',
+    navOrder: 'Where would you like to place this page in the navbar?',
+  };
+
+  for (const [key, value] of Object.entries(frontMatter)) {
+    const promptText = value;
+    let valid = false;
+
+    while (!valid) {
+      const entry = promptSync(promptText);
+
+      if (entry) {
+        frontMatter[key] = String(entry);
+        valid = true;
+      }
+    }
+  }
 }
 
 const template = loadTemplate(`${process.cwd()}/src/templates/page.hbs`);
