@@ -1,74 +1,71 @@
-const fs = require('fs');
-const promptSync = require('prompt-sync')();
+import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter } from './functions';
+import { ReadLine } from 'readline';
+import { PromptObject } from 'prompts';
 
-function loadTemplate(path: string) {
-  let template;
-  try {
-    template = fs.readFileSync(path);
-  } catch (e: any) {
-    if (e?.code == 'ENOENT') {
-      console.log('Page template file missing.');
-      process.exit(1);
-    }
+const pageConfig: PromptObject[] = [
+  {
+    type: 'text',
+    name: 'title',
+    message: 'Please enter a title for this page',
+  },
+  {
+    type: 'text',
+    name: 'slug',
+    message: 'Please enter a slug for this page.',
+    initial: (_prev, values) => {
+      return slugify(values.title);
+    },
+    validate: (value) => {
+      const kebabCase = /^([a-z](?![\d])|[\d](?![a-z]))+(-?([a-z](?![\d])|[\d](?![a-z])))*$|^$/.test(value);
+      const slugExists = getExistingSlugs(`${process.cwd()}/src/content`).includes(value);
 
-    console.log('Encountered an unknown error loading the template file.');
-    process.exit(1);
-  }
+      if (!kebabCase) return 'Slugs must be kebab case.';
+      if (slugExists) return `Slug ${value} already exists.`;
 
-  return template;
-}
-
-function getExistingSlugs(path: string): string[] {
-  let files;
-  try {
-    files = fs.readdirSync(path);
-  } catch (e: any) {
-    if (e?.code == 'ENOENT') {
-      console.log('Content directory missing.');
-      process.exit(1);
-    }
-
-    console.log('Encountered an unknown error loading the template file.');
-    process.exit(1);
-  }
-  const returnValue = files
-    .filter((file: string) => {
-      if (file == 'index.mdx') return false;
-      if (file.slice(file.length - 3) != 'mdx') return false;
       return true;
-    })
-    .map((file: string) => {
-      return file.substring(0, file.length - 4);
-    });
+    },
+  },
+  {
+    type: 'toggle',
+    name: 'showInNav',
+    message: 'Would you like this page to be shown in the navbar?',
+    initial: true,
+    active: 'yes',
+    inactive: 'no',
+  },
+  {
+    type: (_prev, values) => {
+      if (!values.showInNav) return false;
+      return 'text';
+    },
+    name: 'navLabel',
+    message: 'Enter a label for when this page is shown on the navbar.',
+  },
+  {
+    type: (_prev, values) => {
+      if (!values.showInNav) return false;
+      return 'number';
+    },
+    name: 'navOrder',
+    message: 'What position would you like this item to be in the nav?',
+    hint: 'Positive int. Null entries get sorted last.',
+    validate: (value: number) => {
+      console.log(value);
+      const isInteger = Number.isInteger(value);
+      const isPositive = value > 0;
 
-  return returnValue;
+      if (!isInteger) return 'Please enter a whole number.';
+      if (!isPositive) return 'Please enter a positive number.';
+      return true;
+    },
+  },
+];
+
+async function script() {
+  const template = loadTemplate(`${process.cwd()}/src/templates/page.hbs`);
+  const frontMattter = await populateFrontmatter(pageConfig);
+
+  console.log(frontMattter);
 }
 
-function populateFrontmatter() {
-  const frontMatter: Record<string, any> = {
-    slug: 'Enter a slug for this page',
-    title: 'Enter a title for this page',
-    description: 'Enter a description for this page.',
-    showInNav: 'Would you like this page to be shown in the navbar?',
-    navLabel: 'Enter a label to be shown on the navbar.',
-    navOrder: 'Where would you like to place this page in the navbar?',
-  };
-
-  for (const [key, value] of Object.entries(frontMatter)) {
-    const promptText = value;
-    let valid = false;
-
-    while (!valid) {
-      const entry = promptSync(promptText);
-
-      if (entry) {
-        frontMatter[key] = String(entry);
-        valid = true;
-      }
-    }
-  }
-}
-
-const template = loadTemplate(`${process.cwd()}/src/templates/page.hbs`);
-const existingPages = getExistingSlugs(`${process.cwd()}/src/content`);
-console.log(existingPages);
+script();
