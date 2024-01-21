@@ -7,6 +7,9 @@ const pageConfig: PromptObject[] = [
     type: 'text',
     name: 'title',
     message: 'Please enter a title for this post',
+    validate: (value) => {
+      return value.length > 0 || 'Please enter a title.';
+    },
   },
   {
     type: 'text',
@@ -16,9 +19,11 @@ const pageConfig: PromptObject[] = [
       return slugify(values.title);
     },
     validate: (value) => {
+      const empty = value.length == 0;
       const kebabCase = /^([a-z](?![\d])|[\d](?![a-z]))+(-?([a-z](?![\d])|[\d](?![a-z])))*$|^$/.test(value);
       const slugExists = getExistingSlugs(`${process.cwd()}/src/content/blog`).includes(value);
 
+      if (empty) return 'Please enter a slug.';
       if (!kebabCase) return 'Slugs must be kebab case.';
       if (slugExists) return `Slug ${value} already exists.`;
 
@@ -65,7 +70,8 @@ const pageConfig: PromptObject[] = [
 async function script() {
   const template = loadTemplate(`${process.cwd()}/src/templates/blog.hbs`);
   const frontMatter = await populateFrontmatter(pageConfig);
-  console.log(frontMatter)
+  if (!frontMatter.slug || frontMatter.slug == '') return;
+
   const file = buildFile(template, frontMatter);
   writeFile(`${process.cwd()}/src/content/blog/${frontMatter.slug}.mdx`, file);
 }
