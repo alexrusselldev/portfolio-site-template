@@ -6,7 +6,7 @@ const pageConfig: PromptObject[] = [
   {
     type: 'text',
     name: 'title',
-    message: 'Please enter a title for this post',
+    message: 'Please enter a title for this post.',
     validate: (value) => {
       return value.length > 0 || 'Please enter a title.';
     },
@@ -33,7 +33,7 @@ const pageConfig: PromptObject[] = [
   {
     type: 'text',
     name: 'description',
-    message: 'Please enter a description for this post',
+    message: 'Please enter a description for this post.',
   },
   {
     name: 'addThumbnail',
@@ -49,7 +49,7 @@ const pageConfig: PromptObject[] = [
       return 'text';
     },
     name: 'thumbnailPath',
-    message: 'Please enter a path for your file',
+    message: 'Please enter a path for your file.',
     validate: (value) => {
       const exists = fs.existsSync(value);
 
