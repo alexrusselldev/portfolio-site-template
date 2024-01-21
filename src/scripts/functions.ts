@@ -1,5 +1,6 @@
 import fs from 'fs';
 import prompts, { PromptObject } from 'prompts';
+import Handlebars from 'handlebars';
 
 export function slugify(string: string): string {
   return String(string)
@@ -56,11 +57,10 @@ export function getExistingSlugs(path: string): string[] {
 }
 
 export async function populateFrontmatter(config: PromptObject[]) {
-  const frontMatter: Record<string, any> = {};
+  return await prompts(config);
+}
 
-  const entries = await prompts(config);
-
-  console.log(entries);
-
-  return frontMatter;
+export function buildFile(template: string, frontMatter: Record<string, any>) {
+  const builder = Handlebars.compile(template);
+  return builder(frontMatter);
 }
