@@ -1,5 +1,4 @@
 import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile } from './functions';
-import { ReadLine } from 'readline';
 import { PromptObject } from 'prompts';
 
 const pageConfig: PromptObject[] = [
