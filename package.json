@@ -12,7 +12,8 @@
     "lint-staged": "lint-staged",
     "format": "prettier --write .",
     "prepare": "husky install",
-    "new:page": "tsx ./src/scripts/new-page.ts"
+    "new:page": "tsx ./src/scripts/new-page.ts",
+    "new:post": "tsx ./src/scripts/new-post.ts"
   },
   "dependencies": {
     "next": "14.1.0",
