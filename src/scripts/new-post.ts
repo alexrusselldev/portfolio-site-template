@@ -1,6 +1,6 @@
 import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile } from './functions';
 import { PromptObject } from 'prompts';
-import fs from 'fs';
+import fs, { PathLike } from 'fs';
 
 const pageConfig: PromptObject[] = [
   {
@@ -67,12 +67,22 @@ const pageConfig: PromptObject[] = [
   },
 ];
 
+function createThumbnail(source: PathLike, destination: PathLike) {
+  fs.copyFileSync(source, destination);
+}
+
 async function script() {
   const template = loadTemplate(`${process.cwd()}/src/templates/blog.hbs`);
   const frontMatter = await populateFrontmatter(pageConfig);
   if (!frontMatter.slug || frontMatter.slug == '') return;
 
   const file = buildFile(template, frontMatter);
+  if (frontMatter.addThumbnail && frontMatter?.thumbnailPath) {
+    createThumbnail(
+      frontMatter.thumbnailPath,
+      `${process.cwd()}/public/images/blog-thumbnails/${frontMatter.slug}.${frontMatter.thumbnailPath.split('.').pop()}`,
+    );
+  }
   writeFile(`${process.cwd()}/src/content/blog/${frontMatter.slug}.mdx`, file);
 }
 
