@@ -1,4 +1,4 @@
-import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter } from './functions';
+import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile } from './functions';
 import { ReadLine } from 'readline';
 import { PromptObject } from 'prompts';
 
@@ -26,6 +26,11 @@ const pageConfig: PromptObject[] = [
     },
   },
   {
+    type: 'text',
+    name: 'description',
+    message: 'Please enter a description for this page',
+  },
+  {
     type: 'toggle',
     name: 'showInNav',
     message: 'Would you like this page to be shown in the navbar?',
@@ -37,6 +42,9 @@ const pageConfig: PromptObject[] = [
     type: (_prev, values) => {
       if (!values.showInNav) return false;
       return 'text';
+    },
+    initial: (_prev, values) => {
+      return values.title;
     },
     name: 'navLabel',
     message: 'Enter a label for when this page is shown on the navbar.',
@@ -50,7 +58,6 @@ const pageConfig: PromptObject[] = [
     message: 'What position would you like this item to be in the nav?',
     hint: 'Positive int. Null entries get sorted last.',
     validate: (value: number) => {
-      console.log(value);
       const isInteger = Number.isInteger(value);
       const isPositive = value > 0;
 
@@ -63,9 +70,8 @@ const pageConfig: PromptObject[] = [
 
 async function script() {
   const template = loadTemplate(`${process.cwd()}/src/templates/page.hbs`);
-  const frontMattter = await populateFrontmatter(pageConfig);
-
-  console.log(frontMattter);
+  const frontMatter = await populateFrontmatter(pageConfig);
+  const file = buildFile(template, frontMatter);
 }
 
 script();
