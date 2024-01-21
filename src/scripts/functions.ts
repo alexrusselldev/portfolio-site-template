@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs, { PathOrFileDescriptor } from 'fs';
 import prompts, { PromptObject } from 'prompts';
 import Handlebars from 'handlebars';
 
@@ -63,4 +63,8 @@ export async function populateFrontmatter(config: PromptObject[]) {
 export function buildFile(template: string, frontMatter: Record<string, any>) {
   const builder = Handlebars.compile(template);
   return builder(frontMatter);
+}
+
+export function writeFile(path: PathOrFileDescriptor, data: string) {
+  fs.writeFileSync(path, data);
 }
