@@ -1,4 +1,4 @@
-import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile } from './functions';
+import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile } from './functions';
 import { PromptObject } from 'prompts';
 
 const pageConfig: PromptObject[] = [
@@ -71,6 +71,7 @@ async function script() {
   const template = loadTemplate(`${process.cwd()}/src/templates/page.hbs`);
   const frontMatter = await populateFrontmatter(pageConfig);
   const file = buildFile(template, frontMatter);
+  writeFile(`${process.cwd()}/src/content/${frontMatter.slug}.mdx`, file);
 }
 
 script();
