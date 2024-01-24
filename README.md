@@ -1,4 +1,8 @@
+# Next.js mdx site template
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+This repo is a template for building simple static Next.js sites. The content is driven by mdx files located in this repository and content editing is supported by custom scripts.
 
 ## Getting Started
 
@@ -16,18 +20,31 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Useful documentation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Next.js](https://nextjs.org/docs)
+- [devmoji](https://github.com/folke/devmoji)
+- [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote)
+- [tailwindcss](https://tailwindcss.com/docs/installation)
+- [gray-matter](https://github.com/jonschlinkert/gray-matter)
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+This template comes with some scripts setup for content management. These scripts can all be run with `npm run [script name]`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Scripts are located in the src/scripts directory.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### `new:page`
+
+The new page script launches an interactive prompt to gather the necessary frontmatter and then generates a new mdx document in the src/content directory.
+
+This script automatically ensures there are no slug conflicts and updates relevant config across all page content files.
+
+#### `new-post`
+
+The new post script launches an interactive prompt to gather the necessary frontmatter and then generates a new mdx document in the src/content/blog directory.
+
+This script automatically ensures there are no slug conflicts.
 
 ## Deploy on Vercel
 
