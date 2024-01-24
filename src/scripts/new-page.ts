@@ -153,12 +153,15 @@ function writeNavOrder(dir: PathLike, filenames: string[]) {
 async function script() {
   const frontMatter = await populateFrontmatter(pageConfig);
   const file = buildFile(frontMatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder']);
-  const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
-
-  navOrder.splice(frontMatter.navOrder - 1, 0, `${frontMatter.slug}.mdx`);
-
   writeFile(`${process.cwd()}/src/content/${frontMatter.slug}.mdx`, file);
-  writeNavOrder(`${process.cwd()}/src/content/`, navOrder);
+
+  if (frontMatter.showInNav) {
+    const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
+
+    navOrder.splice(frontMatter.navOrder - 1, 0, `${frontMatter.slug}.mdx`);
+
+    writeNavOrder(`${process.cwd()}/src/content/`, navOrder);
+  }
 }
 
 script();
