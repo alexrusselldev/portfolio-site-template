@@ -1,7 +1,6 @@
 import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile } from './functions';
 import { PromptObject } from 'prompts';
 import fs, { PathLike } from 'fs';
-import { readMDX } from '8==D/lib/mdx';
 import matter from 'gray-matter';
 
 const pageConfig: PromptObject[] = [
@@ -96,14 +95,14 @@ async function getNavOrder(path: PathLike) {
 
   const frontMatter = await Promise.all(
     fileNames.map(async (fileName) => {
-      const file = await readMDX(`${path}/${fileName}`);
-      if (file.frontmatter) {
+      const file = matter.read(`${path}/${fileName}`);
+      if (file.data) {
         return {
           fileName,
-          frontMatter: file.frontmatter,
+          frontMatter: file.data,
         };
       }
-      return file?.frontmatter || null;
+      return file?.data || null;
     }),
   );
 
