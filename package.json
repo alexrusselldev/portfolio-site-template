@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint-commit-message": "devmoji -e --lint",
+    "lint-commit-message": "devmoji -e --config devmoji.config.cjs --lint",
     "lint-staged": "lint-staged",
     "format": "prettier --write .",
     "prepare": "husky install",
