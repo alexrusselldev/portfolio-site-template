@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getPathsFromDir, readMDX } from '8==D/lib/mdx';
+import { getPathsFromDir, readMDX } from '@/lib/mdx';
 
 interface IProps {}
 export const Navigation: React.FC<IProps> = async () => {
