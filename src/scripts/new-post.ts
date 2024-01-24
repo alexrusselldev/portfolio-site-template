@@ -1,4 +1,4 @@
-import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile } from './functions';
+import { getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile } from './functions';
 import { PromptObject } from 'prompts';
 import fs, { PathLike } from 'fs';
 
