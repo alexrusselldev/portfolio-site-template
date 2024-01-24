@@ -1,8 +1,8 @@
-import { MDXRemoteWrapper } from '8==D/components/MDXRemoteWrapper';
+import { MDXRemoteWrapper } from '@/components/MDXRemoteWrapper';
 import { NextPage } from 'next';
-import { getPathsFromDir, readMDX } from '8==D/lib/mdx';
+import { getPathsFromDir, readMDX } from '@/lib/mdx';
 import { Metadata } from 'next';
-import { getMetadataFromMDX } from '8==D/lib/metadata';
+import { getMetadataFromMDX } from '@/lib/metadata';
 
 interface IProps {
   params: {
