@@ -93,40 +93,40 @@ async function getNavOrder(path: PathLike) {
     return true;
   });
 
-  const frontMatter = await Promise.all(
+  const frontmatter = await Promise.all(
     fileNames.map(async (fileName) => {
       const file = matter.read(`${path}/${fileName}`);
       if (file.data) {
         return {
           fileName,
-          frontMatter: file.data,
+          frontmatter: file.data,
         };
       }
       return file?.data || null;
     }),
   );
 
-  const navOrder = frontMatter
+  const navOrder = frontmatter
     .filter((file) => {
-      return file?.frontMatter?.navOrder;
+      return file?.frontmatter?.navOrder;
     })
     .sort((a, b) => {
-      if (a?.frontMatter?.navOrder == undefined && b?.frontMatter?.navOrder == undefined) {
+      if (a?.frontmatter?.navOrder == undefined && b?.frontmatter?.navOrder == undefined) {
         return 0;
       }
 
-      if (a?.frontMatter?.navOrder == undefined) {
+      if (a?.frontmatter?.navOrder == undefined) {
         return 1;
       }
-      if (b?.frontMatter?.navOrder == undefined) {
-        return 1;
-      }
-
-      if (a.frontMatter.navOrder > b.frontMatter.navOrder) {
+      if (b?.frontmatter?.navOrder == undefined) {
         return 1;
       }
 
-      if (a.frontMatter.navOrder < b.frontMatter.navOrder) {
+      if (a.frontmatter.navOrder > b.frontmatter.navOrder) {
+        return 1;
+      }
+
+      if (a.frontmatter.navOrder < b.frontmatter.navOrder) {
         return -1;
       }
 
@@ -151,17 +151,17 @@ function writeNavOrder(dir: PathLike, filenames: string[]) {
 }
 
 async function script() {
-  const frontMatter = await populateFrontmatter(pageConfig);
-  const file = buildFile(frontMatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder']);
-  writeFile(`${process.cwd()}/src/content/${frontMatter.slug}.mdx`, file);
+  const frontmatter = await populateFrontmatter(pageConfig);
+  const file = buildFile(frontmatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder']);
+  writeFile(`${process.cwd()}/src/content/${frontmatter.slug}.mdx`, file);
 
-  if (frontMatter.showInNav) {
-    const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
-
-    navOrder.splice(frontMatter.navOrder - 1, 0, `${frontMatter.slug}.mdx`);
-
-    writeNavOrder(`${process.cwd()}/src/content/`, navOrder);
+  if (frontmatter.showInNav) {
   }
+  const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
+
+  navOrder.splice(frontmatter.navOrder - 1, 0, `${frontmatter.slug}.mdx`);
+
+  writeNavOrder(`${process.cwd()}/src/content/`, navOrder);
 }
 
 script();

@@ -1,11 +1,11 @@
 import matter from 'gray-matter';
 
-export function buildFile(frontMatter: Record<string, any>, properties: string[]) {
+export function buildFile(frontmatter: Record<string, any>, properties: string[]) {
   const filteredFrontmatter: Record<string, any> = {};
   for (const property of properties) {
-    if (frontMatter?.[property]) filteredFrontmatter[property] = frontMatter[property];
+    if (frontmatter?.[property]) filteredFrontmatter[property] = frontmatter[property];
   }
 
-  const file = matter.stringify(`# ${frontMatter.title}`, filteredFrontmatter);
+  const file = matter.stringify(`# ${frontmatter.title}`, filteredFrontmatter);
   return file;
 }
