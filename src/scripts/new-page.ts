@@ -2,6 +2,7 @@ import { loadTemplate, getExistingSlugs, slugify, populateFrontmatter, buildFile
 import { PromptObject } from 'prompts';
 import fs, { PathLike } from 'fs';
 import { readMDX } from '8==D/lib/mdx';
+import matter from 'gray-matter';
 
 const pageConfig: PromptObject[] = [
   {
@@ -137,6 +138,17 @@ async function getNavOrder(path: PathLike) {
     });
 
   return navOrder;
+}
+
+function writeNavOrder(dir: PathLike, filenames: string[]) {
+  filenames.forEach((filename, index) => {
+    const file = matter.read(`${dir}${filename}`);
+    file.data.navOrder = index + 1;
+
+    const updatedContent = matter.stringify(file.content, file.data);
+
+    fs.writeFileSync(`${dir}${filename}`, updatedContent);
+  });
 }
 
 async function script() {
