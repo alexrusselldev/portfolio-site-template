@@ -72,11 +72,10 @@ function createThumbnail(source: PathLike, destination: PathLike) {
 }
 
 async function script() {
-  const template = loadTemplate(`${process.cwd()}/src/templates/blog.hbs`);
   const frontMatter = await populateFrontmatter(pageConfig);
   if (!frontMatter.slug || frontMatter.slug == '') return;
 
-  const file = buildFile(template, frontMatter, ['title', 'description', 'postTitle', 'thumbnailAlt']);
+  const file = buildFile(frontMatter, ['title', 'description', 'postTitle', 'thumbnailAlt']);
   if (frontMatter.addThumbnail && frontMatter?.thumbnailPath) {
     createThumbnail(
       frontMatter.thumbnailPath,

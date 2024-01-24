@@ -151,9 +151,8 @@ function writeNavOrder(dir: PathLike, filenames: string[]) {
 }
 
 async function script() {
-  const template = loadTemplate(`${process.cwd()}/src/templates/page.hbs`);
   const frontMatter = await populateFrontmatter(pageConfig);
-  const file = buildFile(template, frontMatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder']);
+  const file = buildFile(frontMatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder']);
   const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
 
   navOrder.splice(frontMatter.navOrder - 1, 0, `${frontMatter.slug}.mdx`);

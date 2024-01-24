@@ -1,6 +1,6 @@
 import matter from 'gray-matter';
 
-export function buildFile(template: string, frontMatter: Record<string, any>, properties: string[]) {
+export function buildFile(frontMatter: Record<string, any>, properties: string[]) {
   const filteredFrontmatter: Record<string, any> = {};
   for (const property of properties) {
     if (frontMatter?.[property]) filteredFrontmatter[property] = frontMatter[property];
