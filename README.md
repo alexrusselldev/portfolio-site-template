@@ -1,5 +1,7 @@
 # Next.js mdx site template
 
+This repository is deployed on Vercel at [next-mdx-site.vercel.app](https://next-mdx-site.vercel.app)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 This repo is a template for building simple static Next.js sites. The content is driven by mdx files located in this repository and content editing is supported by custom scripts.
