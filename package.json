@@ -33,7 +33,6 @@
     "eslint": "8.56.0",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
-    "handlebars": "^4.7.8",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "postcss": "^8",
