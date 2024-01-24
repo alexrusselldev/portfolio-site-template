@@ -76,7 +76,7 @@ async function script() {
   const frontMatter = await populateFrontmatter(pageConfig);
   if (!frontMatter.slug || frontMatter.slug == '') return;
 
-  const file = buildFile(template, frontMatter);
+  const file = buildFile(template, frontMatter, ['title', 'description', 'postTitle', 'thumbnailAlt']);
   if (frontMatter.addThumbnail && frontMatter?.thumbnailPath) {
     createThumbnail(
       frontMatter.thumbnailPath,
