@@ -157,7 +157,10 @@ async function script() {
   const file = buildFile(template, frontMatter);
   const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
 
+  navOrder.splice(frontMatter.navOrder - 1, 0, `${frontMatter.slug}.mdx`);
+
   writeFile(`${process.cwd()}/src/content/${frontMatter.slug}.mdx`, file);
+  writeNavOrder(`${process.cwd()}/src/content/`, navOrder);
 }
 
 script();
