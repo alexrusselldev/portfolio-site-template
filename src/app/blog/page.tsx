@@ -8,7 +8,7 @@ import { getMetadataFromMDX } from '@/lib/metadata';
 
 interface IProps {}
 
-const Home: NextPage<IProps> = async () => {
+const Page: NextPage<IProps> = async () => {
   const content = await readMDX(`${process.cwd()}/src/content/blog.mdx`);
 
   const allPostsSlugs = await getPathsFromDir(`${process.cwd()}/src/content/blog/`);
@@ -51,6 +51,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetadataFromMDX(`${process.cwd()}/src/content/blog.mdx`);
 };
 
-export default Home;
+export default Page;
 
 export const dynamic = 'error';
