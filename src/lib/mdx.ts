@@ -5,7 +5,6 @@ import { promises as fs } from 'fs';
 
 const readMDX: (path: string) => Promise<MDXRemoteProps> = async (path) => {
   const readContent: string | { error: true; code: string } = await fs.readFile(path, 'utf-8').catch((error) => {
-    console.log(error);
     return { error: true, code: error.code };
   });
 
