@@ -52,3 +52,5 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default Home;
+
+export const dynamic = 'error';
