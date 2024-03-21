@@ -1,3 +1,4 @@
+import { Bars3 } from '../Icons';
 import { IPageNavData } from '../TopBar';
 import Link from 'next/link';
 
@@ -9,8 +10,10 @@ export const MobileNavigation: React.FC<IProps> = (props) => {
   const { pages } = props;
 
   return (
-    <nav>
-      <button></button>
+    <nav className="sm:hidden">
+      <button>
+        <Bars3 />
+      </button>
       <div>
         <ul>
           {pages.map(({ slug, content }) => {

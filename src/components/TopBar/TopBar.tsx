@@ -1,6 +1,7 @@
 import { MDXRemoteProps } from 'next-mdx-remote';
 import { Navigation } from '../Navigation/Navigation';
 import { getPathsFromDir, readMDX } from '@/lib/mdx';
+import { MobileNavigation } from '../MobileNavigation';
 
 export interface IPageNavData {
   slug: string;
@@ -50,6 +51,7 @@ export const TopBar: React.FC<IProps> = async () => {
   return (
     <div className="sticky mx-auto w-full">
       <Navigation pages={allPagesData} />
+      <MobileNavigation pages={allPagesData} />
     </div>
   );
 };

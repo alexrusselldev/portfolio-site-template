@@ -9,8 +9,8 @@ export const Navigation: React.FC<IProps> = async (props) => {
   const { pages } = props;
 
   return (
-    <nav role="navigation">
-      <ul className="container flex flex-col items-center justify-center gap-2 py-4 sm:flex-row sm:gap-4">
+    <nav role="navigation" className="hidden sm:block">
+      <ul className="container flex  items-center justify-center gap-4 py-4">
         {pages.map(({ slug, content }) => {
           if (!content?.frontmatter?.showInNav) return null;
           return (
