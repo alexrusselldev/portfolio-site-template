@@ -23,7 +23,6 @@ export const TopBar: React.FC<IProps> = async () => {
       };
     }),
   );
-  console.log(allPagesData);
 
   allPagesData.sort((a, b) => {
     if (a?.content?.frontmatter?.navOrder == undefined && b?.content?.frontmatter?.navOrder == undefined) {
