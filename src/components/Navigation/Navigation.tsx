@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { getPathsFromDir, readMDX } from '@/lib/mdx';
 import { IPageNavData } from '../TopBar';
 
 interface IProps {
