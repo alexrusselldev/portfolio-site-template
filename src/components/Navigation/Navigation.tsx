@@ -40,7 +40,7 @@ export const Navigation: React.FC<IProps> = async () => {
   });
 
   return (
-    <nav className="sticky mx-auto w-full">
+    <nav>
       <ul className="container flex flex-col items-center justify-center gap-2 py-4 sm:flex-row sm:gap-4">
         {allPagesData.map(({ slug, content }) => {
           if (!content?.frontmatter?.showInNav) return null;
