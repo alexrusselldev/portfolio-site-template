@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bars3 } from '../Icons';
 import { IPageNavData } from '../TopBar';
 import Link from 'next/link';
@@ -13,6 +13,15 @@ export const MobileNavigation: React.FC<IProps> = (props) => {
   const { pages } = props;
 
   const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const onKeyPress = (e: KeyboardEvent) => {
+      if (open && e.key === 'Escape') setOpen(false);
+    };
+
+    window.addEventListener('keydown', onKeyPress);
+    return () => window.removeEventListener('keydown', onKeyPress);
+  }, [open]);
 
   return (
     <nav className="sm:hidden container flex flex-row justify-end p-4">
