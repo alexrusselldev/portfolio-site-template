@@ -36,7 +36,7 @@ const Page: NextPage<IProps> = async () => {
                     src={`/images/blog-thumbnails/${slug}.png`}
                     alt={(content?.frontmatter?.thumbnailAlt as string) || `${slug} thumbnail`}
                   />
-                  <span className="text-xl">{(content?.frontmatter?.postTitle as string) || 'Untitled'}</span>
+                  <span className="text-xl">{(content?.frontmatter?.title as string) || 'Untitled'}</span>
                 </Link>
               </li>
             );
