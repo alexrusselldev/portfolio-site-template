@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Bars3 } from '../Icons';
 import { IPageNavData } from '../TopBar';
 import Link from 'next/link';
@@ -23,6 +23,12 @@ export const MobileNavigation: React.FC<IProps> = (props) => {
     return () => window.removeEventListener('keydown', onKeyPress);
   }, [open]);
 
+  const container = useRef<HTMLDivElement>(null);
+
+  const onOverlayClick = (e: React.MouseEvent) => {
+    if (!container.current?.contains(e.target as Node)) setOpen(false);
+  };
+
   return (
     <nav className="sm:hidden container flex flex-row justify-end p-4">
       <button
@@ -36,10 +42,11 @@ export const MobileNavigation: React.FC<IProps> = (props) => {
       <div
         className={classNames(
           'fixed inset-0 z-10 p-8 text-white bg-gray-600/90 flex items-center justify-center',
-          `${open ? 'block' : 'hidden'}`, // control visibility via `open` attribute (or render conditionally)
+          `${open ? 'block' : 'hidden'}`,
         )}
+        onClick={onOverlayClick}
       >
-        <div className="bg-black max-w-sm p-10 rounded absolute">
+        <div className="bg-black max-w-sm p-10 rounded absolute" ref={container}>
           <button
             className="absolute -top-2 -right-2 flex justify-center rounded-full h-8 w-8 bg-gray-800 cursor-pointer "
             onClick={() => setOpen(false)}
