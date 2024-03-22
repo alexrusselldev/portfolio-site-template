@@ -72,6 +72,14 @@ const pageConfig: PromptObject[] = [
       return true;
     },
   },
+  {
+    type: 'toggle',
+    name: 'isParent',
+    message: 'Would you like to be able to add posts to this page?',
+    initial: false,
+    active: 'yes',
+    inactive: 'no',
+  },
 ];
 
 async function getNavOrder(path: PathLike) {
@@ -152,7 +160,7 @@ function writeNavOrder(dir: PathLike, filenames: string[]) {
 
 async function script() {
   const frontmatter = await populateFrontmatter(pageConfig);
-  const file = buildFile(frontmatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder']);
+  const file = buildFile(frontmatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder', 'isParent']);
   writeFile(`${process.cwd()}/src/content/${frontmatter.slug}.mdx`, file);
 
   if (frontmatter.showInNav) {
