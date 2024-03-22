@@ -1,4 +1,4 @@
-import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote';
+import { MDXRemoteProps } from 'next-mdx-remote';
 import { notFound } from 'next/navigation';
 import { serialize } from 'next-mdx-remote/serialize';
 import { promises as fs } from 'fs';
