@@ -8,7 +8,7 @@ interface IProps {
   alt: string;
 }
 
-const ImageWithFallback: React.FC<IProps> = (props) => {
+export const ImageWithFallback: React.FC<IProps> = (props) => {
   const { src, alt } = props;
   const [imgSrc, setImgSrc] = useState(src);
 
@@ -24,5 +24,3 @@ const ImageWithFallback: React.FC<IProps> = (props) => {
     />
   );
 };
-
-export default ImageWithFallback;

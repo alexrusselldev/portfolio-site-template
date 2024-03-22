@@ -2,7 +2,7 @@ import { MDXRemoteWrapper } from '@/components/MDXRemoteWrapper';
 import { NextPage } from 'next';
 import { getPathsFromDir, readMDX } from '@/lib/mdx';
 import Link from 'next/link';
-import ImageWithFallback from '@/components/ImageWithFallback/ImageWithFallback';
+import { ImageWithFallback } from '@/components/ImageWithFallback';
 import { Metadata } from 'next';
 import { getMetadataFromMDX } from '@/lib/metadata';
 
