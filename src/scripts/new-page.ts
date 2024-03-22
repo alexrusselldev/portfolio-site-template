@@ -158,6 +158,24 @@ function writeNavOrder(dir: PathLike, filenames: string[]) {
   });
 }
 
+function createContentDir(slug: string) {
+  const stats = fs.statSync(`${process.cwd()}/src/content/${slug}`, { throwIfNoEntry: false });
+  if (stats == undefined) {
+    fs.mkdirSync(`${process.cwd()}/src/content/${slug}`);
+    fs.writeFileSync(`${process.cwd()}/src/content/${slug}/.gitkeep`, '');
+    return;
+  }
+
+  if (stats.isDirectory()) {
+    return;
+  }
+
+  if (stats.isFile()) {
+    console.log(`Content directory "${slug}" could not be created as a file with this name already exists.`);
+    process.exit(1);
+  }
+}
+
 async function script() {
   const frontmatter = await populateFrontmatter(pageConfig);
   const file = buildFile(frontmatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder', 'isParent']);
