@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-interface IBlogCardImageProps {
+interface IProps {
   src: string;
   alt: string;
 }
 
-const BlogCardImage: React.FC<IBlogCardImageProps> = (props) => {
+const ImageWithFallback: React.FC<IProps> = (props) => {
   const { src, alt } = props;
   const [imgSrc, setImgSrc] = useState(src);
 
@@ -25,4 +25,4 @@ const BlogCardImage: React.FC<IBlogCardImageProps> = (props) => {
   );
 };
 
-export default BlogCardImage;
+export default ImageWithFallback;

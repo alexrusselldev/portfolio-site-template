@@ -2,7 +2,7 @@ import { MDXRemoteWrapper } from '@/components/MDXRemoteWrapper';
 import { NextPage } from 'next';
 import { getPathsFromDir, readMDX } from '@/lib/mdx';
 import Link from 'next/link';
-import BlogCardImage from '@/components/ImageWithFallback/ImageWithFallback';
+import ImageWithFallback from '@/components/ImageWithFallback/ImageWithFallback';
 import { Metadata } from 'next';
 import { getMetadataFromMDX } from '@/lib/metadata';
 
@@ -32,7 +32,7 @@ const Page: NextPage<IProps> = async () => {
             return (
               <li key={slug}>
                 <Link href={`/blog/${slug}`} className="flex flex-col items-center">
-                  <BlogCardImage
+                  <ImageWithFallback
                     src={`/images/blog-thumbnails/${slug}.png`}
                     alt={(content?.frontmatter?.thumbnailAlt as string) || `${slug} thumbnail`}
                   />
