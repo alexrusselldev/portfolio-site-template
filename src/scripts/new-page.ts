@@ -178,6 +178,11 @@ function createContentDir(slug: string) {
 
 async function script() {
   const frontmatter = await populateFrontmatter(pageConfig);
+
+  if (frontmatter?.isParent) {
+    createContentDir(frontmatter.slug);
+  }
+
   const file = buildFile(frontmatter, ['title', 'description', 'showInNav', 'navLabel', 'navOrder', 'isParent']);
   writeFile(`${process.cwd()}/src/content/${frontmatter.slug}.mdx`, file);
 
