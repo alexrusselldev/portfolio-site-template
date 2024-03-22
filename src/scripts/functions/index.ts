@@ -4,3 +4,4 @@ export * from './populateFrontmatter';
 export * from './buildFile';
 export * from './writeFile';
 export * from './createContentDir';
+export * from './updateNavOrder';
