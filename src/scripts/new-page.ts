@@ -156,12 +156,12 @@ async function script() {
   writeFile(`${process.cwd()}/src/content/${frontmatter.slug}.mdx`, file);
 
   if (frontmatter.showInNav) {
+    const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
+
+    navOrder.splice(frontmatter.navOrder - 1, 0, `${frontmatter.slug}.mdx`);
+
+    writeNavOrder(`${process.cwd()}/src/content/`, navOrder);
   }
-  const navOrder = await getNavOrder(`${process.cwd()}/src/content/`);
-
-  navOrder.splice(frontmatter.navOrder - 1, 0, `${frontmatter.slug}.mdx`);
-
-  writeNavOrder(`${process.cwd()}/src/content/`, navOrder);
 }
 
 script();
