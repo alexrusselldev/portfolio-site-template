@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ImageWithFallback } from '@/components/ImageWithFallback';
 import { Metadata } from 'next';
 import { getMetadataFromMDX } from '@/lib/metadata';
+import { CardGrid } from '@/components/CardGrid';
 
 interface IProps {}
 
@@ -26,23 +27,7 @@ const Page: NextPage<IProps> = async () => {
     <>
       <MDXRemoteWrapper {...content} />
       <hr className="my-8 h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
-      <div className="mx-auto max-w-md sm:max-w-xl md:max-w-3xl">
-        <ul className="flex grid-cols-2 flex-col gap-4 sm:grid md:grid-cols-3">
-          {allPostsData.map(({ slug, content }) => {
-            return (
-              <li key={slug}>
-                <Link href={`/blog/${slug}`} className="flex flex-col items-center">
-                  <ImageWithFallback
-                    src={`/images/blog-thumbnails/${slug}.png`}
-                    alt={(content?.frontmatter?.thumbnailAlt as string) || `${slug} thumbnail`}
-                  />
-                  <span className="text-xl">{(content?.frontmatter?.title as string) || 'Untitled'}</span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <CardGrid items={allPostsData} />
     </>
   );
 };
