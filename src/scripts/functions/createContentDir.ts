@@ -1,15 +1,18 @@
 import fs from 'fs';
+import { buildFile, writeFile } from '.';
 
 export function createContentDir(slug: string) {
   const stats = fs.statSync(`${process.cwd()}/src/content/${slug}`, { throwIfNoEntry: false });
+  const example = buildFile({ title: 'Example', description: 'An example post.' }, ['title', 'description']);
+
   if (stats == undefined) {
     fs.mkdirSync(`${process.cwd()}/src/content/${slug}`);
-    fs.writeFileSync(`${process.cwd()}/src/content/${slug}/example.mdx`, '# Example');
+    writeFile(`${process.cwd()}/src/content/${slug}/example.mdx`, example);
     return;
   }
 
   if (stats.isDirectory()) {
-    fs.writeFileSync(`${process.cwd()}/src/content/${slug}/example.mdx`, '# Example');
+    writeFile(`${process.cwd()}/src/content/${slug}/example.mdx`, example);
     return;
   }
 
