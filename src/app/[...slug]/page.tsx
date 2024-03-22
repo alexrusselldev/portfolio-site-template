@@ -3,6 +3,7 @@ import { Metadata, NextPage } from 'next';
 import { getPathsFromDir, readMDX } from '@/lib/mdx';
 import { getMetadataFromMDX } from '@/lib/metadata';
 import { promises as fs } from 'fs';
+import { CardGrid } from '@/components/CardGrid';
 
 interface IProps {
   params: {
@@ -23,7 +24,30 @@ const Page: NextPage<IProps> = async ({ params }) => {
 
   const content = await readMDX(`${process.cwd()}/src/content/${fullSlug}`);
 
-  return <MDXRemoteWrapper {...content} />;
+  const isParent = content?.frontmatter?.isParent;
+
+  if (!isParent) {
+    return <MDXRemoteWrapper {...content} />;
+  }
+
+  const allPostsSlugs = await getPathsFromDir(`${process.cwd()}/src/content/${slug[0]}/`);
+
+  const allPostsData = await Promise.all(
+    allPostsSlugs.map(async (post) => {
+      return {
+        slug: post.slug,
+        content: await readMDX(`${process.cwd()}/src/content/${slug[0]}/${post.slug}.mdx`),
+      };
+    }),
+  );
+
+  return (
+    <>
+      <MDXRemoteWrapper {...content} />
+      <hr className="my-8 h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
+      <CardGrid items={allPostsData} />
+    </>
+  );
 };
 
 export async function generateStaticParams() {
