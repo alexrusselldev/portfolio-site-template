@@ -1,4 +1,4 @@
-import { getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile } from './functions';
+import { getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile, createContentDir } from './functions';
 import { PromptObject } from 'prompts';
 import fs, { PathLike } from 'fs';
 import matter from 'gray-matter';
@@ -156,24 +156,6 @@ function writeNavOrder(dir: PathLike, filenames: string[]) {
 
     fs.writeFileSync(`${dir}${filename}`, updatedContent);
   });
-}
-
-function createContentDir(slug: string) {
-  const stats = fs.statSync(`${process.cwd()}/src/content/${slug}`, { throwIfNoEntry: false });
-  if (stats == undefined) {
-    fs.mkdirSync(`${process.cwd()}/src/content/${slug}`);
-    fs.writeFileSync(`${process.cwd()}/src/content/${slug}/.gitkeep`, '');
-    return;
-  }
-
-  if (stats.isDirectory()) {
-    return;
-  }
-
-  if (stats.isFile()) {
-    console.log(`Content directory "${slug}" could not be created as a file with this name already exists.`);
-    process.exit(1);
-  }
 }
 
 async function script() {
