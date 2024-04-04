@@ -1,8 +1,20 @@
 import { getExistingSlugs, slugify, populateFrontmatter, buildFile, writeFile } from './functions';
 import { PromptObject } from 'prompts';
 import fs, { PathLike } from 'fs';
+import { getParentPages } from './functions/getParentPages';
 
 const pageConfig: PromptObject[] = [
+  {
+    type: 'select',
+    name: 'collection',
+    message: 'Which collection would you like to make the post in?',
+    choices: getParentPages().map((page) => {
+      return {
+        title: page.name,
+        value: page.slug,
+      };
+    }),
+  },
   {
     type: 'text',
     name: 'title',
