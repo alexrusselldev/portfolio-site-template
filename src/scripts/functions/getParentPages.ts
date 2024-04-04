@@ -1,7 +1,12 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 
-export function getParentPages() {
+interface IParentPage {
+  name: string;
+  slug: string;
+}
+
+export function getParentPages(): IParentPage[] {
   let files;
   try {
     files = fs.readdirSync(`${process.cwd()}/src/content`);
@@ -35,7 +40,9 @@ export function getParentPages() {
 
       return false;
     })
-    .filter((item) => item);
+    .filter((item): item is IParentPage => {
+      return !!item;
+    });
 
   return parents;
 }
